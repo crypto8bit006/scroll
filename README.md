@@ -6,9 +6,9 @@
 
 ---
 
-🔔 <b>Subscribe to me:</b> https://t.me/sybilwave
+🔔 <b>Subscribe to me:</b> https://twitter.com/crypto8bit
 
-🤑 <b>Donate me:</b> 0x00000b0ddce0bfda4531542ad1f2f5fad7b9cde9
+🤑 <b>Donate me:</b> 0x4b348D8B939583Bc4aF9F3Fed7D1B866fbE9cFC4
 
 ---
 <h2>🚀 Installation</h2>
@@ -67,5 +67,3 @@ python main.py
 2) In the accounts.txt file, specify your private keys
 
 3) In the rpc.json file at the path zksync/data/rpc.json we can change the rpc to ours
-
-Info on updates and just a life blog –– https://t.me/sybilwave
