@@ -2,20 +2,21 @@ import time
 
 from loguru import logger
 from web3 import Web3
-from config import ZEBRA_ROUTER_ABI, ZEBRA_CONTRACTS, SCROLL_TOKENS
+from config import AMBIENT_CONTRACTS, AMBIENT_ROUTER_ABI, AMBIENT_IMPACT_ABI, SCROLL_TOKENS
 from utils.gas_checker import check_gas
 from utils.helpers import retry
 from .account import Account
 
 
-class Zebra(Account):
+class Ambient(Account):
     def __init__(self, account_id: int, private_key: str, recipient: str) -> None:
         super().__init__(account_id=account_id, private_key=private_key, chain="scroll", recipient=recipient)
 
-        self.swap_contract = self.get_contract(ZEBRA_CONTRACTS["router"], ZEBRA_ROUTER_ABI)
+        self.swap_contract = self.get_contract(AMBIENT_CONTRACTS["router"], AMBIENT_ROUTER_ABI)
+        self.impact_contract = self.get_contract(AMBIENT_CONTRACTS["impact"], AMBIENT_IMPACT_ABI)
 
     async def get_min_amount_out(self, from_token: str, to_token: str, amount: int, slippage: float):
-        min_amount_out = await self.swap_contract.functions.getAmountsOut(
+        min_amount_out = await self.impact_contract.functions.calcImpact(
             amount,
             [
                 Web3.to_checksum_address(from_token),
@@ -102,7 +103,7 @@ class Zebra(Account):
         )
 
         logger.info(
-            f"[{self.account_id}][{self.address}] Swap on Zebra – {from_token} -> {to_token} | {amount} {from_token}"
+            f"[{self.account_id}][{self.address}] Swap on Ambient – {from_token} -> {to_token} | {amount} {from_token}"
         )
 
         if from_token == "ETH":

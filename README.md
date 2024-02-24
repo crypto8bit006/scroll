@@ -33,31 +33,47 @@ python main.py
 
 3. Make deposit/withdraw with LayerSwap bridge
 
-4. Wrap/unwrap ETH
+4. Make bridge with Nitro
 
-5. Swap on SkyDrome
+5. Wrap/unwrap ETH
 
-6. Swap on SyncSwap
+6. Swap on SkyDrome
 
-7. LayerBank lending protocol (deposit/withdraw)
+7. Swap on SyncSwap
 
-8. Mint Zerius NFT and bridge this NFT to any chain (layerzero protocol)
+8. Swap on Zebra
 
-9. Crete Omnisea NFT
+9. Swap on XySwap (my ref code is enabled, 1% of the transaction amount goes to me, come not from you, but from the Xy contract! can be turned off in config.py)
 
-10. Mint NFT on NFTS2ME
+10. LayerBank lending protocol (deposit/withdraw)
 
-11. Dmail
+11. Aave lending protocol (deposit/withdraw)
 
-12. Create Gnosis Safe
+12. Mint Zerius NFT and bridge this NFT to any chain (layerzero protocol)
 
-13. Deploy any contract
+13. Mint L2Pass NFT
 
-14. Custom routes - actions to be performed sequentially or randomly
+14. Mint ZkStars NFT
 
-15. Check gas before starting the module, if gas > specified, the software will wait for
+15. Crete Omnisea NFT
 
-16. Logging via logger module
+16. Mint NFT on NFTS2ME
+
+17. Mint Scroll Origins NFT
+
+18. Dmail
+
+19. RubyScore Vote
+
+20. Create Gnosis Safe
+
+21. Deploy any contract
+
+22. Custom routes - actions to be performed sequentially or randomly
+
+23. Check gas before starting the module, if gas > specified, the software will wait for
+
+24. Logging via logger module
 
 ---
 <h2>⚙️ Settings</h2>

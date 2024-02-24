@@ -8,13 +8,14 @@ from utils.sleeping import sleep
 
 
 class Multiswap(Account):
-    def __init__(self, account_id: int, private_key: str) -> None:
-        super().__init__(account_id=account_id, private_key=private_key, chain="scroll")
+    def __init__(self, account_id: int, private_key: str, recipient: str) -> None:
+        super().__init__(account_id=account_id, private_key=private_key, chain="scroll", recipient=recipient)
 
         self.swap_modules = {
             "syncswap": SyncSwap,
             "skydrome": Skydrome,
             "zebra": Zebra,
+            "xyswap": XYSwap,
         }
 
     def get_swap_module(self, use_dex: list):
@@ -30,19 +31,16 @@ class Multiswap(Account):
             min_swap: int,
             max_swap: int,
             slippage: Union[int, float],
-            random_swap_token: bool,
+            back_swap: bool,
             min_percent: int,
             max_percent: int
     ):
         quantity_swap = random.randint(min_swap, max_swap)
 
-        if random_swap_token:
-            path = [random.choice(["ETH", "USDC"]) for _ in range(0, quantity_swap)]
-            usdc_balance = await self.get_balance(SCROLL_TOKENS["USDC"])
-            if path[0] == "USDC" and usdc_balance["balance"] <= 1:
-                path[0] = "ETH"
-        else:
-            path = ["ETH" if _ % 2 == 0 else "USDC" for _ in range(0, quantity_swap)]
+        path = ["ETH" if _ % 2 == 0 else "USDC" for _ in range(quantity_swap)]
+
+        if back_swap and path[-1] == "ETH":
+            path.append("USDC")
 
         logger.info(f"[{self.account_id}][{self.address}] Start MultiSwap | quantity swaps: {quantity_swap}")
 
@@ -61,10 +59,12 @@ class Multiswap(Account):
 
                 balance = await self.get_balance(SCROLL_TOKENS["USDC"])
 
-                min_amount = balance["balance"] if balance["balance"] <= 1 else balance["balance"] / 100 * min_percent
-                max_amount = balance["balance"] if balance["balance"] <= 1 else balance["balance"] / 100 * max_percent
+                min_amount = balance["balance"] if balance["balance"] <= 1 or _ + 1 == len(path) \
+                    else balance["balance"] / 100 * min_percent
+                max_amount = balance["balance"] if balance["balance"] <= 1 or _ + 1 == len(path) \
+                    else balance["balance"] / 100 * max_percent
 
-            swap_module = self.get_swap_module(use_dex)(self.account_id, self.private_key)
+            swap_module = self.get_swap_module(use_dex)(self.account_id, self.private_key, self.recipient)
             await swap_module.swap(
                 token,
                 to_token,
