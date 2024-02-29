@@ -18,9 +18,11 @@ from .nfts2me import Minter
 from .rubyscore import RubyScore
 from .safe import GnosisSafe
 from .l2telegraph import L2Telegraph
+from .nftorigins import NftOrigins
 from .deploy import Deployer
 from .swap_tokens import SwapTokens
 from .multiswap import Multiswap
+from .multibridge import Multibridge
 from .routes import Routes
 from .transfer import Transfer
 from .tx_checker import check_tx
